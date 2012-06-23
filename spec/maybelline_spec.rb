@@ -18,6 +18,10 @@ describe Maybelline::Maybe do
     expect{subject.i_wanna_nil}.to throw_symbol
   end
 
+  it "should thow :nothing if initialized with nil" do
+    expect{Maybelline::Maybe.new(nil)}.to throw_symbol
+  end
+
   it "should expose the internal object with __object__" do
     subject.__object__.should == object
   end
@@ -39,6 +43,12 @@ describe "#Maybe" do
   it "should return the value if the chain of methods is successful" do
     result = Maybe(object){|o| o.rob.bob.jack}
     result.should == 1
+  end
+
+  it "should not call the block when called when nil is passed" do
+    executed = false
+    Maybe(nil){executed = true}
+    executed.should be_false
   end
 end
 

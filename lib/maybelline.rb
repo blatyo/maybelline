@@ -18,6 +18,8 @@ module Maybelline
 
     def initialize(object)
       @__object__ = object
+
+      ::Object.new.send :throw, :nothing if @__object__.nil?      
     end
 
     def method_missing(method, *args)
