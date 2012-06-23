@@ -29,3 +29,5 @@ module Maybelline
     end
   end
 end
+
+include Maybelline
