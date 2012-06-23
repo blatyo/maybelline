@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Allen Madsen"]
   s.email       = ["blatyo@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Maybe you should start using the maybe monad, stop checking for nil, and be confident}
+  s.description = %q{Maybe you should start using the maybe monad, stop checking for nil, and be confident}
 
   s.rubyforge_project = "maybelline"
 
