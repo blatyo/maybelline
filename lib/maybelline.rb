@@ -31,29 +31,15 @@ module Maybelline
     end
 
     def instance_eval(*args)
-      if block_given?
-        @__object__.instance_eval(*args, &Proc.new)
-      else
-        @__object__.instance_eval(*args)
-      end
+      @__object__.instance_eval(*args)
     end
 
     def instance_exec(*args)
-      if block_given?
-        @__object__.instance_exec(*args, &Proc.new)
-      else
-        @__object__.instance_exec(*args)
-      end
+      @__object__.instance_exec(*args)
     end
 
     def method_missing(method, *args)
-      result = if block_given?
-                 @__object__.__send__(method, *args, &Proc.new)
-               else
-                 @__object__.__send__(method, *args)
-               end
-
-      ::Object.new.send :throw, :nothing if result.nil?
+      result = @__object__.__send__(method, *args)
 
       Maybe.new(result)
     end
