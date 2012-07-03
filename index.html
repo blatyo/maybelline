@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Maybelline by blatyo</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Maybelline</h1>
+        <p>Maybe you should stop checking for nil and be confident</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/blatyo/maybelline" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/blatyo/maybelline/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/blatyo/maybelline/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p><a href="http://travis-ci.org/blatyo/maybelline"><img src="http://travis-ci.org/blatyo/maybelline.png" alt="Build Status"></a></p>
+
+<p>An implementation of the <a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad">maybe monad</a>.</p>
+
+<h2>Setup</h2>
+
+<p><strong>Gemfile</strong></p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="s1">'maybelline'</span>
+</pre>
+</div>
+
+
+<p><strong>Manual</strong></p>
+
+<div class="highlight">
+<pre><span class="nb">require</span> <span class="s1">'maybelline'</span>
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<p>Say you have some objects like the ones below:</p>
+
+<div class="highlight">
+<pre><span class="nb">require</span> <span class="s1">'ostruct'</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"neat"</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="s2">"super"</span> <span class="o">=&gt;</span> <span class="s2">"cool"</span><span class="p">,</span>
+    <span class="s2">"lame"</span>  <span class="o">=&gt;</span> <span class="kp">nil</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">object</span> <span class="o">=</span> <span class="no">OpenStruct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">object</span><span class="o">.</span><span class="n">neat</span> <span class="o">=</span> <span class="no">OpenStruct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">object</span><span class="o">.</span><span class="n">neat</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>If any method in the chain of calls returns nil, the block will return nil.</p>
+
+<div class="highlight">
+<pre><span class="no">Maybe</span><span class="p">(</span><span class="n">data</span><span class="p">){</span><span class="o">|</span><span class="n">d</span><span class="o">|</span> <span class="n">d</span><span class="o">[</span><span class="s2">"this_key_doesnt_exist"</span><span class="o">][</span><span class="s2">"this_key_wont_get_called"</span><span class="o">]</span><span class="p">}</span> <span class="c1">#=&gt; nil</span>
+<span class="n">data</span><span class="o">.</span><span class="n">maybe</span><span class="p">{</span><span class="o">|</span><span class="n">d</span><span class="o">|</span> <span class="n">d</span><span class="o">[</span><span class="s2">"this_key_doesnt_exist"</span><span class="o">][</span><span class="s2">"this_key_wont_get_called"</span><span class="o">]</span><span class="p">}</span>  <span class="c1">#=&gt; nil</span>
+<span class="n">object</span><span class="o">.</span><span class="n">maybe</span><span class="p">{</span><span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="o">.</span><span class="n">neat</span><span class="o">.</span><span class="n">lame</span><span class="o">.</span><span class="n">this_method_never_gets_called</span><span class="p">}</span>             <span class="c1">#=&gt; nil</span>
+</pre>
+</div>
+
+
+<p>If it is successful, it will return the value.</p>
+
+<div class="highlight">
+<pre><span class="n">data</span><span class="o">.</span><span class="n">maybe</span><span class="p">{</span><span class="o">|</span><span class="n">d</span><span class="o">|</span> <span class="n">d</span><span class="o">[</span><span class="s2">"neat"</span><span class="o">][</span><span class="s2">"super"</span><span class="o">]</span><span class="p">}</span>  <span class="c1">#=&gt; "cool"</span>
+<span class="n">object</span><span class="o">.</span><span class="n">maybe</span><span class="p">{</span><span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="o">.</span><span class="n">neat</span><span class="o">.</span><span class="n">super</span><span class="p">}</span>      <span class="c1">#=&gt; "cool"</span>
+</pre>
+</div>
+
+
+<h2>Note on Reporting Issues</h2>
+
+<ul>
+<li>Try to make a failing test case</li>
+<li>Tell me which version of ruby you're using</li>
+<li>Tell me which OS you are using</li>
+<li>Provide me with any extra files if necessary</li>
+</ul><h2>Note on Patches/Pull Requests</h2>
+
+<ul>
+<li>Fork the project.</li>
+<li>Make your feature addition or bug fix.</li>
+<li>Add tests for it. This is important so I don't break it in a future version unintentionally.</li>
+<li>Commit, do not mess with rakefile, version, or history. (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)</li>
+<li>Send me a pull request. Bonus points for topic branches.</li>
+</ul>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/blatyo">blatyo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-33059328-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
