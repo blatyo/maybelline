@@ -2,7 +2,9 @@
 
 [![Build Status](http://travis-ci.org/blatyo/maybelline.png)](http://travis-ci.org/blatyo/maybelline)
 
-An implementation of the [maybe monad](http://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad).
+An implementation of the [maybe monad][1].
+
+[1]: http://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad
 
 ## Setup
 
