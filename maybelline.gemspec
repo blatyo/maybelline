@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Maybelline::VERSION
   s.authors     = ["Allen Madsen"]
   s.email       = ["blatyo@gmail.com"]
-  s.homepage    = "https://blatyo.github.com/maybelline"
+  s.homepage    = "http://blatyo.github.com/maybelline"
   s.summary     = %q{Maybe you should start using the maybe monad, stop checking for nil, and be confident}
   s.description = %q{Maybe you should start using the maybe monad, stop checking for nil, and be confident}
 
